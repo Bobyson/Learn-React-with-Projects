@@ -1,4 +1,22 @@
+import { useState } from "react";
+import { useTodo } from "../contexts/TodoContext";
+import PropTypes from 'prop-types';
+
 function TodoItem({ todo }) {
+
+    const [isTodoEditable, setIsTodoEditable] = useState(false)
+    const [todoMsg, setTodoMsg] = useState(todo.todo)
+
+    const {updateTodo, deleteTodo, toggleComplete} = useTodo()
+
+    const editTodo = () => {
+        updateTodo(todo.id, {...todo, todo: todoMsg})
+        setIsTodoEditable(false)
+    }
+
+    const toggleCompleted = () => {
+        toggleComplete(todo.id)
+    }
     
 
     return (
@@ -46,5 +64,13 @@ function TodoItem({ todo }) {
         </div>
     );
 }
+
+TodoItem.propTypes = {
+    todo: PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        todo: PropTypes.string.isRequired,
+        completed: PropTypes.bool.isRequired,
+    }).isRequired,
+};
 
 export default TodoItem;
