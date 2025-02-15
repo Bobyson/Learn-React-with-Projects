@@ -4,5 +4,13 @@ import Container from './container/Container'
 import Logo from "./Logo";
 import Input from "./Input"
 import Button from "./Button"
+import Select from "./Select"
+import RTE from "./RTE"
+import Signup from "../pages/Signup";
+import Login from "../pages/Login";
+import PostForm from "./post-form/PostForm"
 
-export { Header, Footer, Container, Logo, Button, Input }
+import PostCard from "./PostCard"
+import AuthLayout from './AuthLayout'
+
+export { Header, Footer, Container, Logo, Button, Input, RTE, Select, Signup, Login, PostForm,  PostCard, AuthLayout }
