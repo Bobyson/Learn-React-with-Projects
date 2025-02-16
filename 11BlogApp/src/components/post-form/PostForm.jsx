@@ -21,21 +21,21 @@ function PostForm({post}) {
 
     const submit = async(data) => {
         if(post) {
-            const file = data.image[0] ? appwriteService.uploadFile(data.image[0]) : null
+            const file = data.image[0] ? await appwriteService.uploadFile(data.image[0]) : null;
 
             if(file) {
-                appwriteService.deleteFile(post.featuredImage)
+                appwriteService.deleteFile(post.featuredImage);
             }
             const dbPost = await appwriteService.updatePost(post.$id, {
                 ...data,
                 featuredImage: file ? file.$id : undefined,
-            })
+            });
 
             if (dbPost) {
                 navigate(`/post/${dbPost.$id}`)
             }
         } else {
-            const file = appwriteService.uploadFile(data.image[0])
+            const file = await appwriteService.uploadFile(data.image[0]);
 
             if(file) {
                 const fileId = file.$id
@@ -49,7 +49,7 @@ function PostForm({post}) {
                 }
             }
         }
-    }
+    };
 
     const slugTransform = useCallback((value) => {
         if (value && typeof value === 'string') 
@@ -59,7 +59,7 @@ function PostForm({post}) {
             .replace(/^[a-zA-Z\d\s]+/g, '-')
             .replace(/\s/g, '-')
         
-        return ''
+        return '';
 
     }, [])
 
@@ -68,11 +68,9 @@ function PostForm({post}) {
             if (name === 'title') {
                 setValue('slug', slugTransform(value.title, {shouldValidate: true}))
             }
-        })
+        });
 
-        return () => {
-            subscription.unsubscribe()
-        }
+        return () => subscription.unsubscribe()
     }, [watch, slugTransform, setValue])
 
   return (

@@ -1,4 +1,4 @@
-import  {useState} from 'react'
+import {useState} from 'react'
 import {Link, useNavigate} from 'react-router-dom'
 import {useDispatch } from 'react-redux'
 import {useForm } from 'react-hook-form'
@@ -15,6 +15,7 @@ function Login() {
 
     const login = async(data) => {
         setError('')
+        
         try {
             const session = await authService.login(data)
             if (session) {
@@ -24,7 +25,7 @@ function Login() {
             }
         } catch (error) {
             setError(error.message)
-        }
+        } 
     }
 
   return (
@@ -70,7 +71,7 @@ function Login() {
                         required: true,
                     })}
                     />
-                    <Button type='submit' className='w-full'>Sign in</Button>
+                    <Button type='submit' className='w-full' >Sign in</Button>
                 </div>
             </form>
         </div>
