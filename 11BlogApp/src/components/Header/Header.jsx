@@ -1,4 +1,4 @@
-import { Container, Logo, LogoutBtn} from '../index'
+import { Container, Logo, LogoutBtn, ThemeButton } from '../index'
 import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
@@ -21,7 +21,7 @@ function Header() {
       active: !authStatus,
     },
     {
-      name: 'Signup',
+      name: 'Get Started',
       slug: '/signup',
       active: !authStatus,
     }, 
@@ -38,27 +38,30 @@ function Header() {
   ]
 
   return (
-    <header className='py-3 shadow bg-gray-500'>
+    <header className='py-4 shadow bg-white dark:bg-gray-900 transition-colors duration-200'>
       <Container>
-        <nav className='flex'>
-          <div>
-            <Link to='/'>
+        <nav className='flex items-center justify-between'>
+          <div className='flex items-center'>
+            <Link to='/' className='hover:opacity-80 transition-opacity'>
               <Logo />
             </Link>
           </div>
-          <ul className='flex ml-auto'>
+          <ul className='flex items-center gap-2'>
             {navItems.map((item) => 
             item.active ? (
               <li key={item.name}>
                 <button
                 onClick={() => navigate(item.slug)}
-                className='inline-block px-6 py-2 duration-200 hover:bg-blue-100 rounded-fill'
+                className='inline-block px-6 py-2 text-gray-700 dark:text-gray-200 font-medium duration-200 hover:bg-cyan-400/10 rounded-lg transition-colors'
                 >{item.name}</button>
               </li>
             ) : null
             )}
+            <li>
+              <ThemeButton />
+            </li>
             {authStatus && (
-              <li>
+              <li className='ml-2'>
                 <LogoutBtn />
               </li>
             )}

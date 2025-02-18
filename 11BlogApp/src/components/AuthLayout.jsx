@@ -1,23 +1,35 @@
-import {useState, useEffect} from 'react'
-import {useSelector} from 'react-redux'
-import {useNavigate} from 'react-router-dom'
+import  { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import PropTypes from 'prop-types'
 
 export default function Protected({children, authentication = true}) {
-
     const navigate = useNavigate()
     const [loader, setLoader] = useState(true)
     const authStatus = useSelector(state => state.auth.status)
 
     useEffect(() => {
-        // TODO: make it more easy
-        if(authentication && authStatus !== authentication) {
-            navigate('/login')
-        } else if (!authentication && authStatus !== authentication) {
-            navigate('/')
+        if(authentication && authStatus !== true) {
+            navigate("/login", { 
+                state: { message: "Please log in to access this feature" }
+            })
+        } else if(!authentication && authStatus === true) {
+            navigate("/")
         }
         setLoader(false)
-    }, [authStatus, authentication, navigate])
+    }, [authStatus, navigate, authentication])
 
-  return loader ? <h1>Loading...</h1> : <>{children}</>
+    if(loader) {
+        return <div className="w-full h-screen flex justify-center items-center">
+            <h1>Loading...</h1>
+        </div>
+    }
+
+    return <>{children}</>
+}
+
+Protected.propTypes = {
+    children: PropTypes.node,
+    authentication: PropTypes.bool
 }
 

@@ -12,5 +12,6 @@ import LogoutBtn from "./Header/LogoutBtn"
 import PostForm from "./post-form/PostForm"
 import PostCard from "./PostCard";
 import AuthLayout from './AuthLayout'
+import ThemeButton from "./ThemeButton"
 
-export { Header, Footer, Container, Logo, Button, Input, RTE, Select, Signup, Login, PostForm,  PostCard, AuthLayout, LogoutBtn }
+export { Header, Footer, Container, Logo, Button, Input, RTE, Select, Signup, Login, PostForm,  PostCard, AuthLayout, LogoutBtn, ThemeButton }

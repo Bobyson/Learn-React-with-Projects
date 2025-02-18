@@ -4,6 +4,7 @@ import {Button, Input, Select, RTE} from '../index'
 import appwriteService from '../../appwrite/config'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import PropTypes from 'prop-types'
 
 
 function PostForm({post}) {
@@ -17,7 +18,8 @@ function PostForm({post}) {
     })
 
     const navigate = useNavigate()
-    const userData = useSelector(state => state.user.userData)
+    const userData = useSelector(state => state.auth.userData);
+    
 
     const submit = async(data) => {
         if(post) {
@@ -53,14 +55,13 @@ function PostForm({post}) {
 
     const slugTransform = useCallback((value) => {
         if (value && typeof value === 'string') 
-        return value
-            .trim()
-            .toLowerCase()
-            .replace(/^[a-zA-Z\d\s]+/g, '-')
-            .replace(/\s/g, '-')
+            return value
+                .trim()
+                .toLowerCase()
+                .replace(/[^a-zA-Z\d\s]+/g, '-')
+                .replace(/\s/g, '-')
         
         return '';
-
     }, [])
 
     React.useEffect(() => {
@@ -122,6 +123,17 @@ function PostForm({post}) {
             </div>
         </form>
   )
+}
+
+PostForm.propTypes = {
+    post: PropTypes.shape({
+        title: PropTypes.string,
+        slug: PropTypes.string,
+        content: PropTypes.string,
+        status: PropTypes.string,
+        featuredImage: PropTypes.string,
+        $id: PropTypes.string
+    })
 }
 
 export default PostForm

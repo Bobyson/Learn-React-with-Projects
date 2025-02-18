@@ -1,10 +1,10 @@
-import { Editor} from 'tinymce'
-import {Controller} from 'react-hook-form'
+import { Editor } from '@tinymce/tinymce-react'
+import { Controller } from 'react-hook-form'
+import PropTypes from 'prop-types'
+import { useRef } from 'react'
 
-
-
-export default function RTE({name, control, label, defaultValue = '', }) {
-
+export default function RTE({name, control, label, defaultValue = '' }) {
+  const editorRef = useRef(null);
 
   return (
     <div className='w-full'>
@@ -15,6 +15,8 @@ export default function RTE({name, control, label, defaultValue = '', }) {
         control={control}
         render={({field: {onChange}}) => (
             <Editor
+                apiKey={import.meta.env.VITE_TINYMCE_API_KEY}
+                onInit={(_evt, editor) => editorRef.current = editor}
                 initialValue={defaultValue}
                 init={{
                     initialValue: defaultValue,
@@ -52,5 +54,13 @@ export default function RTE({name, control, label, defaultValue = '', }) {
         />
     </div>
   )
+}
+
+// Add PropTypes validation
+RTE.propTypes = {
+    name: PropTypes.string,
+    control: PropTypes.object.isRequired,
+    label: PropTypes.string,
+    defaultValue: PropTypes.string
 }
 
